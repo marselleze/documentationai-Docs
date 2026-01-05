@@ -1,0 +1,173 @@
+---
+title: System Configuration and Settings
+description: Customize the schedule management system to fit your institution's needs.
+---
+
+## Overview
+
+Configure Расписание КГУ to match your institution's academic structure, user roles, and reporting requirements. Access the configuration dashboard at `https://dashboard.example.com/settings`. Use the API at `https://api.example.com/v1/config` for programmatic changes.
+
+<Columns cols={3}>
+  <Card title="Academic Calendars" icon="calendar" href="#academic-calendars">
+    Define terms, holidays, and exam periods.
+  </Card>
+  <Card title="Notifications" icon="bell" href="#notifications">
+    Set up email, SMS, and in-app alerts.
+  </Card>
+  <Card title="User Access" icon="users" href="#user-access">
+    Manage roles and permissions.
+  </Card>
+</Columns>
+
+<Callout kind="tip">
+  Back up your configuration before making changes. Export settings via the dashboard.
+</Callout>
+
+## Setting Up Academic Calendars
+
+Start by creating your academic year structure.
+
+<Steps>
+  <Step title="Create Calendar" icon="calendar-plus">
+    Navigate to Settings > Calendars in the dashboard.
+  </Step>
+  <Step title="Define Terms" icon="edit-3">
+    Add semester start/end dates.
+  </Step>
+  <Step title="Add Holidays" icon="gift">
+    Specify non-teaching days.
+  </Step>
+  <Step title="Publish" icon="check-circle">
+    Activate the calendar for scheduling.
+  </Step>
+</Steps>
+
+Use the API for bulk setup:
+
+<CodeGroup tabs="cURL,JavaScript">
+  ````bash
+  curl -X POST https://api.example.com/v1/calendars \
+    -H "Authorization: Bearer YOUR_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{
+      "year": 2024,
+      "terms": [{"name": "Fall", "start": "2024-09-01", "end": "2024-12-20"}]
+    }'
+  ````
+  ````javascript
+  const response = await fetch('https://api.example.com/v1/calendars', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer YOUR_TOKEN',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      year: 2024,
+      terms: [{ name: 'Fall', start: '2024-09-01', end: '2024-12-20' }]
+    })
+  });
+  ````
+</CodeGroup>
+
+<ParamField path="year" param-type="integer" required="true">
+  Academic year (e.g., 2024).
+</ParamField>
+
+<ParamField body="terms" param-type="array" required="true">
+  Array of term objects with `name`, `start`, and `end`.
+</ParamField>
+
+## Configuring Notifications and Alerts
+
+<Tabs>
+  <Tab title="Email" icon="mail">
+    Configure SMTP settings for schedule change notifications.
+
+    <ParamField header="X-SMTP-Server" param-type="string" required="true">
+      Your SMTP server (e.g., `smtp.gmail.com`).
+    </ParamField>
+
+    ```json
+    {
+      "notifications": {
+        "email": {
+          "enabled": true,
+          "server": "smtp.gmail.com",
+          "port": 587,
+          "from": "no-reply@kgu.edu"
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="SMS" icon="phone">
+    Integrate with Twilio or similar for urgent alerts.
+
+    ```json
+    {
+      "notifications": {
+        "sms": {
+          "enabled": true,
+          "provider": "twilio",
+          "accountSid": "YOUR_ACCOUNT_SID",
+          "authToken": "YOUR_AUTH_TOKEN"
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Managing User Access Levels
+
+Define roles like admin, teacher, and student.
+
+<ParamField query="role" param-type="string" required="true">
+  User role: `admin`, `teacher`, `student`.
+</ParamField>
+
+<ParamField body="permissions" param-type="array">
+  Permissions array, e.g., `["view-schedule", "edit-classes"]`.
+</ParamField>
+
+Update via API:
+
+```javascript
+await fetch('https://api.example.com/v1/users/123/permissions', {
+  method: 'PUT',
+  headers: { 'Authorization': 'Bearer YOUR_TOKEN' },
+  body: JSON.stringify({
+    role: 'teacher',
+    permissions: ['view-schedule', 'edit-own-classes']
+  })
+});
+```
+
+## Customizing Reports and Exports
+
+<Expandable title="Advanced Report Templates" default-open="false">
+  Customize CSV/Excel exports with custom fields.
+
+  ```json
+  {
+    "reports": {
+      "schedule": {
+        "fields": ["course", "teacher", "room", "time"],
+        "format": "csv"
+      }
+    }
+  }
+  ```
+</Expandable>
+
+<Callout kind="alert">
+  Test exports with sample data to ensure custom fields display correctly.
+</Callout>
+
+## Troubleshooting Common Issues
+
+- **Config not saving:** Verify `Authorization` header uses a valid `YOUR_TOKEN`.
+- **Notifications failing:** Check SMTP credentials and firewall rules for port 587.
+- **Access denied:** Ensure user role includes required permissions.
+
+For support, visit `https://docs.example.com/help-center`.

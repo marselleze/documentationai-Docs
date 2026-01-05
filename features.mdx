@@ -1,0 +1,135 @@
+---
+title: Core Features of Расписание КГУ
+description: Explore the essential tools for managing schedules, from creation to collaboration.
+---
+
+## Overview
+
+Расписание КГУ provides powerful tools to create, edit, and share schedules efficiently. You can build complex timetables, assign roles to team members, export data in multiple formats, and sync with external calendars. These features ensure seamless schedule management for educational institutions.
+
+<Columns cols={3}>
+  <Card title="Editing & Templates" icon="edit-3" href="#editing">
+    Customize schedules with drag-and-drop and reusable templates.
+  </Card>
+  <Card title="Roles & Permissions" icon="users" href="#roles">
+    Control access with granular user roles.
+  </Card>
+  <Card title="Export & View" icon="download" href="#export">
+    View interactively or export to popular formats.
+  </Card>
+</Columns>
+
+## Advanced Schedule Editing and Templates
+
+Edit schedules with precision using advanced tools. Drag lessons between time slots, add recurring events, and apply color-coding for subjects.
+
+<Tabs>
+  <Tab title="Drag-and-Drop Editing" icon="move">
+    Select lessons and drag them to new slots. Conflicts auto-highlight in red.
+  </Tab>
+  <Tab title="Templates" icon="file-plus">
+    Save common schedules as templates. Reuse for semesters or classes.
+  </Tab>
+</Tabs>
+
+<Steps>
+  <Step title="Create Template" icon="plus">
+    Open the schedule editor.
+
+    Click **Templates** > **New Template**.
+
+    Name it `Fall Semester 2024` and save.
+  </Step>
+  <Step title="Apply Template" icon="file-text">
+    Load the template into a new schedule.
+
+    Adjust specific dates as needed.
+  </Step>
+</Steps>
+
+## User Roles and Permissions
+
+Define roles to manage access securely. Assign permissions like view-only, edit, or admin.
+
+<Callout kind="alert">
+  Always review permissions before sharing schedules to prevent unauthorized changes.
+</Callout>
+
+| Role       | View | Edit | Share | Admin |
+|------------|------|------|-------|-------|
+| Student    | ✅   | ❌   | ❌    | ❌    |
+| Teacher    | ✅   | ✅   | ✅    | ❌    |
+| Coordinator| ✅   | ✅   | ✅    | ✅    |
+
+Use the roles panel to assign users:
+
+```javascript
+// Example API call to update roles
+const updateRole = async (userId, role) => {
+  const response = await fetch(`https://api.example.com/schedules/123/roles`, {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${YOUR_TOKEN}` },
+    body: JSON.stringify({ userId, role: 'teacher' })
+  });
+  return response.json();
+};
+```
+
+## Viewing and Exporting Schedules
+
+View schedules in calendar, list, or timeline modes. Export to PDF, ICS, or CSV for sharing.
+
+<CodeGroup tabs="JavaScript,Python">
+  ```javascript
+  // Export to ICS format
+  const exportICS = async (scheduleId) => {
+    const response = await fetch(`https://api.example.com/schedules/${scheduleId}/export?format=ics`, {
+      headers: { 'Authorization': `Bearer ${YOUR_TOKEN}` }
+    });
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'schedule.ics';
+    a.click();
+  };
+  ```
+  ```python
+  # Export to CSV
+  import requests
+
+  headers = {'Authorization': f'Bearer {YOUR_TOKEN}'}
+  response = requests.get('https://api.example.com/schedules/123/export?format=csv', headers=headers)
+  with open('schedule.csv', 'wb') as f:
+      f.write(response.content)
+  ```
+</CodeGroup>
+
+## Integration with Calendars
+
+Sync schedules with Google Calendar, Outlook, or iCal. Push updates automatically.
+
+<Expandable title="Setup Google Calendar Integration" default-open="true">
+  1. Navigate to **Integrations** > **Calendars**.
+
+  2. Click **Connect Google**.
+
+  3. Authorize and select calendars to sync.
+
+  Changes in Расписание КГУ update your calendar in real-time.
+</Expandable>
+
+<Expandable title="Advanced Webhook Sync">
+  Set up webhooks for custom integrations.
+
+  ```javascript
+  // Webhook payload example
+  {
+    "event": "schedule.updated",
+    "scheduleId": "123",
+    "changes": ["lesson_added", "time_changed"]
+  }
+  ```
+</Expandable>
+
+These features make Расписание КГУ your central hub for schedule management. Start by creating your first template today.

@@ -1,0 +1,157 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: Расписание КГУ
+  license:
+    name: MIT
+servers:
+  - url: http://petstore.swagger.io/v1
+paths:
+  /schedules:
+    get:
+      summary: List all schedules
+      operationId: listSchedules
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: An paged array of schedules
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedules'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create schedule
+      operationId: createSchedule
+      responses:
+        201:
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /schedules/{scheduleId}:
+    get:
+      summary: Get schedule info
+      operationId: showScheduleById
+      parameters:
+        - name: scheduleId
+          in: path
+          required: true
+          description: The id of the schedule to retrieve
+          schema:
+            type: string
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedules'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /groups:
+    get:
+      summary: List all groups
+      operationId: listGroups
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: An paged array of groups
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedules'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /groups/{groupId}:
+    get:
+      summary: Get group info
+      operationId: showGroupById
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          description: The id of the group to retrieve
+          schema:
+            type: string
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedules'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Schedule:
+      required:
+        - id
+        - title
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        description:
+          type: string
+    Schedules:
+      type: array
+      items:
+        $ref: '#/components/schemas/Schedule'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

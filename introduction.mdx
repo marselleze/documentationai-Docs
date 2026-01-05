@@ -1,0 +1,97 @@
+---
+title: Introduction to Расписание КГУ
+description: Discover the Schedule Management System for КГУ, designed to streamline timetable creation and administration for educational institutions.
+---
+
+## Overview
+
+Расписание КГУ provides a comprehensive system for managing schedules at Kyrgyz State University (КГУ). You create, edit, and share timetables efficiently, eliminating manual spreadsheets and errors. Designed for administrators, teachers, and students, it centralizes all scheduling needs in one intuitive platform.
+
+<Callout kind="info">
+  Access the dashboard at `https://dashboard.raspkgu.com` after signing up.
+</Callout>
+
+## Key Features
+
+Explore the core capabilities that make Расписание КГУ indispensable for educational scheduling.
+
+<Columns cols={3}>
+  <Card title="Schedule Creation" icon="calendar" href="/quickstart">
+    Build complex timetables with drag-and-drop interface. Assign classes, rooms, and instructors automatically.
+  </Card>
+  <Card title="Sharing & Access" icon="share-2" href="/sharing">
+    Generate shareable links or embed schedules in websites. Control permissions for students and staff.
+  </Card>
+  <Card title="Real-time Updates" icon="refresh-cw" href="/updates">
+    Push changes instantly to all users. Receive notifications for conflicts or changes.
+  </Card>
+</Columns>
+
+## Benefits for Administrators and Users
+
+Administrators save hours weekly by automating conflict detection and room optimization. Students access personalized schedules via mobile-friendly views, reducing confusion during semester starts. Teachers update their availability seamlessly, ensuring accurate class times.
+
+<Callout kind="tip">
+  Integrate with your existing systems using our REST API for custom automations.
+</Callout>
+
+## Quick Start
+
+Get up and running in minutes.
+
+<Steps>
+  <Step title="Sign Up" icon="user-plus">
+    Visit `https://dashboard.raspkgu.com/signup` and create your admin account with your КГУ email.
+  </Step>
+  <Step title="Create First Schedule">
+    Navigate to Schedules > New Schedule. Add groups, subjects, and rooms.
+  </Step>
+  <Step title="Share Schedule">
+    Click Share and generate a public link. Copy the embed code for your university portal.
+  </Step>
+</Steps>
+
+For API integration, use this example to fetch schedules programmatically:
+
+<CodeGroup tabs="JavaScript,Python">
+  ```javascript
+  const response = await fetch('https://api.example.com/v1/schedules/123', {
+    headers: {
+      'Authorization': `Bearer ${YOUR_API_KEY}`
+    }
+  });
+  const schedule = await response.json();
+  console.log(schedule);
+  ```
+  ```python
+  import requests
+
+  headers = {'Authorization': f'Bearer {YOUR_API_KEY}'}
+  response = requests.get('https://api.example.com/v1/schedules/123', headers=headers)
+  schedule = response.json()
+  print(schedule)
+  ```
+</CodeGroup>
+
+## Next Steps
+
+Dive deeper into Расписание КГУ documentation.
+
+<Columns cols={2}>
+  <Card title="Quickstart Guide" icon="book-open" href="/quickstart">
+    Detailed setup instructions and first schedule creation.
+  </Card>
+  <Card title="Authentication" icon="lock" href="/authentication">
+    Secure your account with API keys and OAuth.
+  </Card>
+  <Card title="Advanced Features" icon="settings" href="/guides">
+    Automations, integrations, and custom reports.
+  </Card>
+  <Card title="Changelog" icon="git-commit" href="/changelog">
+    Stay updated with the latest releases.
+  </Card>
+</Columns>
+
+<Expandable title="Need Help?" default-open="false">
+  Contact support at `support@raspkgu.com` or join our community forum for tips and troubleshooting.
+</Expandable>

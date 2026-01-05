@@ -1,0 +1,158 @@
+---
+title: Changelog
+description: Track the latest updates and improvements to Расписание КГУ.
+---
+
+## Recent Updates
+
+<Update label="2024-10-15" description="v2.1.0" tags={["feature", "bugfix"]}>
+
+## New Features
+
+- Added real-time schedule synchronization across devices using WebSockets.
+- Introduced export to iCal and Google Calendar formats for seamless integration.
+
+## Improvements
+
+- Optimized loading times for large schedules by `>40%`.
+- Enhanced mobile responsiveness with touch-friendly drag-and-drop rescheduling.
+
+## Bug Fixes
+
+- Fixed crash when editing overlapping lessons.
+- Resolved authentication token refresh issues during long sessions.
+
+To enable the new WebSocket feature, update your client code:
+
+<CodeGroup tabs="JavaScript,Python">
+```javascript
+const socket = new WebSocket('wss://api.example.com/schedule');
+socket.onmessage = (event) => {
+  const update = JSON.parse(event.data);
+  renderSchedule(update);
+};
+```
+
+```python
+import websocket
+ws = websocket.WebSocketApp("wss://api.example.com/schedule",
+                            on_message = lambda ws, message: render_schedule(json.loads(message)))
+ws.run_forever()
+```
+</CodeGroup>
+
+</Update>
+
+<Update label="2024-09-20" description="v2.0.0" tags={["feature", "breaking"]}>
+
+## New Features
+
+- Full mobile app support with native push notifications.
+- Advanced filtering by teacher, group, or classroom.
+
+## Breaking Changes
+
+- Updated API endpoint from `/v1/schedules` to `/v2/schedules`. Migrate your integrations.
+
+## Bug Fixes
+
+- Corrected timezone handling for international users.
+- Fixed duplicate entries in bulk imports.
+
+Example migration code:
+
+````jsx
+// Old
+fetch('https://api.example.com/v1/schedules')
+
+// New
+fetch('https://api.example.com/v2/schedules', {
+  headers: { 'Authorization': `Bearer ${YOUR_TOKEN}` }
+})
+````
+
+</Update>
+
+<Update label="2024-08-10" description="v1.5.0" tags={["improvement", "bugfix"]}>
+
+## Improvements
+
+- Added dark mode toggle in dashboard.
+- Increased API rate limits to `>500 requests/minute`.
+
+## Bug Fixes
+
+- Patched security vulnerability in lesson sharing links.
+- Fixed PDF export rendering for Cyrillic characters.
+
+</Update>
+
+## Upgrade Instructions
+
+Follow these steps to update your Расписание КГУ instance.
+
+<Steps>
+  <Step title="Backup Data" icon="database">
+    Export your current schedules:
+
+````bash
+curl -H "Authorization: Bearer YOUR_TOKEN" \
+  https://api.example.com/v2/schedules/export > backup.json
+````
+  </Step>
+  <Step title="Update Package" icon="download">
+    Install the latest version:
+
+    <Tabs>
+      <Tab title="npm">
+````bash
+npm install raspkgu@latest
+````
+      </Tab>
+      <Tab title="Docker">
+````bash
+docker pull raspkgu:latest
+docker run -p 3000:3000 raspkgu:latest
+````
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Verify" icon="check-circle">
+    Check the version at `https://dashboard.example.com/settings`:
+
+    <ParamField path="version" param-type="string">
+      Returns current version, e.g., "2.1.0".
+    </ParamField>
+  </Step>
+</Steps>
+
+<Callout kind="tip">
+  Test updates in a staging environment first. Use the `/health` endpoint to confirm API stability.
+</Callout>
+
+## Quick Links
+
+<Columns cols={3}>
+  <Card title="Quickstart" icon="book-open" href="/quickstart">
+    Get started with the latest version.
+  </Card>
+  <Card title="API Reference" icon="code" href="/authentication">
+    Updated endpoints and auth.
+  </Card>
+  <Card title="Report Issues" icon="github" href="https://github.com/example/raspkgu" target="_blank">
+    Contribute or file bugs.
+  </Card>
+</Columns>
+
+## Upcoming Features
+
+<ExpandableGroup>
+  <Expandable title="AI Schedule Optimization" default-open="true">
+    Machine learning to auto-resolve conflicts and suggest optimal slots. Expected in v2.2.0.
+  </Expandable>
+  <Expandable title="Integration with Google Workspace">
+    Direct sync with Google Classroom and Meet. Beta in November 2024.
+  </Expandable>
+</ExpandableGroup>
+
+Stay tuned for more enhancements to streamline your KGU schedule management.

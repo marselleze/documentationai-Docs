@@ -1,0 +1,128 @@
+---
+title: Getting Started with Расписание КГУ
+description: Learn how to set up your account and create your first schedule in minutes.
+---
+
+## Prerequisites
+
+<Callout kind="info">
+
+Before you begin, ensure you have:
+
+- A modern web browser (Chrome, Firefox, or Safari)
+- An active email address for account verification
+- Access to `https://dashboard.example.com` (the Расписание КГУ dashboard)
+
+</Callout>
+
+## Create Your Account
+
+Follow these steps to register and log in to Расписание КГУ.
+
+<Steps>
+  <Step title="Visit the Dashboard" icon="monitor">
+    Open your browser and navigate to `https://dashboard.example.com`.
+  </Step>
+  <Step title="Sign Up" icon="user-plus">
+    Click **Sign Up** and fill in your details:
+    
+    - Full name
+    - Email address
+    - Password (minimum 8 characters)
+    
+    Agree to the terms and submit the form.
+  </Step>
+  <Step title="Verify Email" icon="mail">
+    Check your inbox for a verification email from Расписание КГУ. Click the link to activate your account.
+  </Step>
+  <Step title="Log In" icon="log-in">
+    Return to the dashboard, enter your email and password, then click **Log In**.
+  </Step>
+</Steps>
+
+## Dashboard Navigation
+
+Once logged in, explore the main sections of the dashboard.
+
+<Columns cols={3}>
+  <Card title="Schedules" icon="calendar" href="#create-schedule">
+    View, edit, and manage all your timetables.
+  </Card>
+  <Card title="Groups" icon="users" href="/docs/groups">
+    Add student groups and assign schedules.
+  </Card>
+  <Card title="Reports" icon="bar-chart-3" href="/docs/reports">
+    Generate attendance and utilization reports.
+  </Card>
+</Columns>
+
+## Create Your First Timetable
+
+Build a basic weekly schedule for a class group.
+
+<Steps>
+  <Step title="New Schedule" icon="plus">
+    Click **New Schedule** in the sidebar. Enter:
+    
+    - Schedule name: `Math 101 - Week 1`
+    - Group: `CS-101`
+  </Step>
+  <Step title="Add Events" icon="clock">
+    Drag events from the toolbar or use quick add:
+    
+    | Time Slot | Subject     | Room | Instructor |
+    |-----------|-------------|------|------------|
+    | 09:00-10:30 | Algebra    | A-101| Dr. Smith |
+    | 11:00-12:30 | Calculus   | B-202| Prof. Lee |
+  </Step>
+  <Step title="Save and Share" icon="save">
+    Click **Save**. Share via link or embed code.
+  </Step>
+</Steps>
+
+<Tabs>
+  <Tab title="Desktop" icon="monitor">
+    Use drag-and-drop for easy event placement.
+  </Tab>
+  <Tab title="Mobile" icon="smartphone">
+    Tap to add events and pinch to zoom timeline.
+  </Tab>
+</Tabs>
+
+Here is an example embed code for your schedule:
+
+<CodeGroup tabs="JavaScript,HTML">
+  ```javascript
+  // Embed in your site
+  const embed = document.createElement('iframe');
+  embed.src = 'https://dashboard.example.com/embed/math101?token=YOUR_TOKEN';
+  embed.width = 800;
+  embed.height = 600;
+  document.body.appendChild(embed);
+  ```
+  ```html
+  <!-- Simple iframe embed -->
+  <iframe
+    src="https://dashboard.example.com/embed/math101?token=YOUR_TOKEN"
+    width="800"
+    height="600"
+    frameborder="0">
+  </iframe>
+  ```
+</CodeGroup>
+
+## Access Tutorials
+
+<Expandable title="View Built-in Tutorials" default-open="true">
+  From the dashboard, click **Help** > **Tutorials** to access:
+  
+  - Video guides on advanced scheduling
+  - Interactive walkthroughs for reports
+  - Tips for multi-group management
+  
+  Complete the "Basic Timetable" tutorial to earn your first badge.
+</Expandable>
+
+<Callout kind="tip">
+  Ready for more? Check [Groups](/docs/groups) for managing student cohorts or [Reports](/docs/reports) for analytics.
+</Callout>
